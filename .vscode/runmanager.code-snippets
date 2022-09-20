@@ -1,0 +1,18 @@
+{
+	"RunManager": {
+		"prefix": "rfce",
+		"body": [
+		  "const App = () => {",
+		  "  return (",
+		  "    <section>",
+		  "     ",
+		  "    </section>",
+		  "  );",
+		  "}",
+		  "",
+		  "export default App;",
+		  ""
+		],
+		"description": "RunManager"
+	  }
+}
