@@ -2,16 +2,15 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const UserSchema = Schema({
-    email: {
-        type: String,
-        required: [true, 'Please, add a user.']
-    },
-    password: {
-        type: Number,
-        required: [true, 'Please, add a password']
-    }
+    name: String,
+    username: String,
+    email: String,
+    city: String,
+    zipcode: String,
+    website: String
+
 }, {
-    timestamp: true
+    timestramp: new Date().toLocaleDateString()
 })
 
 module.exports = mongoose.model('User', UserSchema)

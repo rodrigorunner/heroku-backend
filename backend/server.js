@@ -1,4 +1,4 @@
-const { handleError } = require('./middleware/runMiddleware')
+const { handleError } = require('./middleware/userMiddleware')
 const connectDB = require('./config/db')
 const dotenv = require('dotenv').config()
 const port = process.env.PORT || 5000
@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 // Configurar rota default da aplicação.
-app.use('/api/v1/', require('./routes/runRoutes'))
+app.use('/api/v1/', require('./routes/userRoutes'))
 
 app.use(handleError)
 

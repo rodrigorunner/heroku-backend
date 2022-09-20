@@ -1,5 +1,3 @@
-const { stack } = require("../routes/runRoutes")
-
 const handleError = (err, req, res, next) => {
     let statusCode = res.statusCode ? res.statusCode : 500
     
