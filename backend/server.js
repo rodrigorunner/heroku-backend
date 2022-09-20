@@ -1,6 +1,7 @@
 const { handleError } = require('./middleware/runMiddleware')
 const connectDB = require('./config/db')
 const dotenv = require('dotenv').config()
+const port = process.env.PORT || 5000
 const express = require('express')
 const path = require('path')
 const cors = require('cors')
@@ -19,4 +20,4 @@ app.use('/api/v1/', require('./routes/runRoutes'))
 
 app.use(handleError)
 
-app.listen(process.env.PORT || 5000, () => console.log(`App listening on port ${port}`))
+app.listen(port, () => console.log(`App listening on port ${port}`))
