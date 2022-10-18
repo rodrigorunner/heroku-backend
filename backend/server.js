@@ -1,13 +1,15 @@
 const { handleError } = require('./middleware/userMiddleware')
-const connectDB = require('./config/db')
 const dotenv = require('dotenv').config()
+const connectDB = require('./config/db')
 const port = process.env.PORT || 5000
 const express = require('express')
+const morgan = require('morgan')
 const path = require('path')
 const cors = require('cors')
 const app = express()
 
 app.use(cors())
+app.use(morgan('dev'))
 
 connectDB()
 
