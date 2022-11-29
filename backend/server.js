@@ -39,6 +39,10 @@ app.use(session(configCookie))
 // Configurar rota default da aplicação.
 app.use('/api/v1/', require('./routes/userRoutes'))
 
+app.get('/', (req, res) => {
+    res.render('home')
+})
+
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page not found', 404))
 })
