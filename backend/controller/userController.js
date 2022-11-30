@@ -1,7 +1,7 @@
-const User = require('../models/userModel')
+const { racesSchema } = require('../utils/validateForm')
 const ExpressError = require('../utils/ExpressError')
 const catchAsync = require('../utils/catchAsync')
-const Joi = require('joi')
+const User = require('../models/userModel')
 
 const getUser = async (req, res) => {
     const user = await User.find({})
@@ -12,50 +12,47 @@ const getUser = async (req, res) => {
 const getUserById = catchAsync(async (req, res) => {
     const user = await User.findById(req.params.id)
     res.status(200).json(user)
+    res.redirect('/races')
 })
 
 const createUser = catchAsync(async (req, res) => {
-    const racesSchema = Joi.object({
-        name: Joi.string().required(),
-        username: Joi.string().required(),
-        email: Joi.string().required(),
-        city: Joi.string().required(),
-        zipcode: Joi.string().required(),
-        website: Joi.string().required(),
-    }).required()
-
-    const { error } = await racesSchema.validate(req.body)
+    const { error } = racesSchema.validate(req.body)
     if(error) {
         const msg = error.details.map(el => el.message)
         throw new ExpressError(msg, 404)
     }
-    const user = new User(req.body)
-    await user.save()
+
+    const createdUser = await User.create(req.body)
+    res.status(200).json(createdUser)
 })
 
-const updateUser = async (req, res) => {
-    const user = await User.findById(req.params.id)
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
-    res.status(200).json(updatedUser)
-}
+const updateUser = catchAsync(async (req, res) => {
+    const { id } = req.params 
+    
+    if(!id) {
+        throw new ExpressError('Invalid operation.', 404)
+    }
 
-const deleteUser = async (req, res) => {
+    const updatedUser = await User.findByIdAndUpdate(id, {...req.body}, {new: true})
+    res.status(200).json(updatedUser)
+})
+
+const deleteUser = catchAsync(async (req, res) => {
     const user = await User.findById(req.params.id)
 
     if(!user) {
-        res.status(400)
-        throw new Error('Run does not exists.')
+        throw new ExpressError('Invalid operation.', 404)
     }
 
     await user.remove()
 
     res.status(200).json({ id: req.params.id })
-}
+})
 
 module.exports = {
     getUser,
     getUserById,
     createUser,
     updateUser,
-    deleteUser,
+    deleteUser
 }

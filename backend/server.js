@@ -10,7 +10,6 @@ const ejs = require('ejs')
 const engine = require('ejs-mate')
 const app = express()
 const session = require('express-session')
-const { config } = require('dotenv')
 
 app.use(cors())
 app.use(morgan('dev'))

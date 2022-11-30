@@ -2,9 +2,18 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const UserSchema = new Schema({
-    name: String,
-    username: String,
-    email: String,
+    name: {
+        type: String,
+        required: [true, 'Invalid operation.']
+    },
+    username: {
+        type: String,
+        required: [true, 'Invalid operation.']
+    },
+    email: {
+        type: String,
+        required: [true, 'Invalid operation.']
+    },
     city: String,
     zipcode: String,
     website: String
